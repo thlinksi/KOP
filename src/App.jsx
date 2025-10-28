@@ -12,7 +12,7 @@ function App() {
 
     const handlePageChange = (page, newGameState = null) => {
         if (page === 'results' && newGameState) {
-            setResults([...results, { moves: newGameState.moves, time: newGameState.time }]); // Додає результат
+            setResults([...results, { moves: newGameState.moves, time: newGameState.time }]);
         }
         setCurrentPage(page);
         if (newGameState) setGameState(newGameState);

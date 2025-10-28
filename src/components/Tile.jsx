@@ -2,10 +2,10 @@ function Tile({ value, onClick }) {
     return (
         <div
             className="tile"
-            style={{ backgroundColor: value !== 16 ? '#2196F3' : 'transparent' }}
-            onClick={value !== 16 ? onClick : null}
+            style={{ backgroundColor: value !== 0 ? '#2196F3' : 'transparent' }}
+            onClick={value !== 0 ? onClick : null}
         >
-            {value !== 16 ? value : ''}
+            {value !== 0 ? value : ''}
         </div>
     );
 }

@@ -1,16 +1,12 @@
+import { useEffect } from 'react';
 import Button from '../components/Button';
 import Board from '../components/Board';
 import { useGame } from '../hooks/useGame';
 import { useTimer } from '../hooks/useTimer';
-import { useEffect } from 'react';
 
 function GamePage({ onEnd }) {
-    const { tiles, moves, isWon, shuffle, moveTile } = useGame();
+    const { tiles, moves, isWon, resetGame, moveTile } = useGame();
     const { time } = useTimer(!isWon);
-
-    useEffect(() => {
-        shuffle();
-    }, []);
 
     useEffect(() => {
         if (isWon) {
@@ -21,9 +17,18 @@ function GamePage({ onEnd }) {
     return (
         <>
             <h2>Основна сторінка гри</h2>
-            <Board tiles={tiles} onTileClick={moveTile} /> {}
+            <Board tiles={tiles} onTileClick={moveTile} />
             <p>Кроки: {moves} | Час: {time} сек</p>
-            <Button onClick={() => onEnd({ moves, time })} color="#f44336">Завершити гру</Button>
+
+            <div style={{ marginTop: '15px' }}>
+                <Button onClick={resetGame} color="#ff9800">
+                    Нова гра
+                </Button>
+                {' '}
+                <Button onClick={() => onEnd({ moves, time })} color="#f44336">
+                    Завершити гру
+                </Button>
+            </div>
         </>
     );
 }

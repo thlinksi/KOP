@@ -4,12 +4,14 @@ export const useTimer = (isActive) => {
     const [time, setTime] = useState(0);
 
     useEffect(() => {
+        let interval;
         if (isActive) {
-            const interval = setInterval(() => {
-                setTime(time + 1);
+            interval = setInterval(() => {
+                setTime((prev) => prev + 1);
             }, 1000);
-            return () => clearInterval(interval);
         }
-    }, [time, isActive]); 
+        return () => clearInterval(interval);
+    }, [isActive]);
+
     return { time };
 };
