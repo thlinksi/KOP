@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react';
 
-export const useTimer = (isActive) => {
+export const useTimer = (isActive, resetTrigger = 0) => {
     const [time, setTime] = useState(0);
+
+    useEffect(() => {
+        setTime(0);
+    }, [resetTrigger]);
 
     useEffect(() => {
         let interval;

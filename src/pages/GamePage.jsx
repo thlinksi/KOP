@@ -5,8 +5,8 @@ import { useGame } from '../hooks/useGame';
 import { useTimer } from '../hooks/useTimer';
 
 function GamePage({ onEnd }) {
-    const { tiles, moves, isWon, resetGame, moveTile } = useGame();
-    const { time } = useTimer(!isWon);
+    const { tiles, moves, isWon, resetGame, moveTile, resetTrigger } = useGame();
+    const { time } = useTimer(!isWon, resetTrigger);
 
     useEffect(() => {
         if (isWon) {

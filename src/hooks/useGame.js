@@ -1,3 +1,4 @@
+
 import { useState, useCallback } from 'react';
 
 const generateInitialPuzzle = () => {
@@ -21,15 +22,19 @@ const isSolvable = (arr) => {
     return (inversions + emptyRow) % 2 === 0;
 };
 
+/* const generateInitialPuzzle = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 13, 14, 15, 12];*/ //для швидкої перевірки виграшу
+
 export const useGame = () => {
     const [tiles, setTiles] = useState(generateInitialPuzzle);
     const [moves, setMoves] = useState(0);
     const [isWon, setIsWon] = useState(false);
+    const [resetTrigger, setResetTrigger] = useState(0);
 
     const resetGame = useCallback(() => {
         setTiles(generateInitialPuzzle());
         setMoves(0);
         setIsWon(false);
+        setResetTrigger((prev) => prev + 1);
     }, []);
 
     const moveTile = useCallback((index) => {
@@ -60,5 +65,6 @@ export const useGame = () => {
         isWon,
         resetGame,
         moveTile,
+        resetTrigger,
     };
 };
