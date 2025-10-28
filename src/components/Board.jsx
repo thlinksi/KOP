@@ -1,10 +1,10 @@
 import Tile from './Tile';
 
-function Board({ tiles }) {
+function Board({ tiles, onTileClick }) {
     return (
         <div className="board">
             {tiles.map((tile, index) => (
-                <Tile key={index} value={tile} />
+                <Tile key={index} value={tile} onClick={() => onTileClick(index)} />
             ))}
         </div>
     );
