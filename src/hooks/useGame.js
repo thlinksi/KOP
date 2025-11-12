@@ -1,30 +1,37 @@
+import { useState, useCallback, useEffect } from 'react';
 
-import { useState, useCallback } from 'react';
+export const useGame = (gridSize = 4) => {
+    const totalTiles = gridSize * gridSize;
+    const winState = Array.from({ length: totalTiles - 1 }, (_, i) => i + 1).concat(0);
 
-const generateInitialPuzzle = () => {
-    let puzzle;
-    do {
-        puzzle = Array.from({ length: 15 }, (_, i) => i + 1).concat(0);
-        puzzle.sort(() => Math.random() - 0.5);
-    } while (!isSolvable(puzzle));
-    return puzzle;
-};
+    const generateInitialPuzzle = () => {
+        let puzzle;
+        do {
+            puzzle = Array.from({ length: totalTiles - 1 }, (_, i) => i + 1).concat(0);
+            puzzle.sort(() => Math.random() - 0.5);
+        } while (!isSolvable(puzzle, gridSize));
+        return puzzle;
+        // швидка перевірка виграшу 4х4
+        // return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 0, 15];
+        // швидка перевірка виграшу 5х5
+       // return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 0, 24];
+        // швидка перевірка виграшу 6х6
+       // return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 0, 35]
+    };
 
-const isSolvable = (arr) => {
-    let inversions = 0;
-    for (let i = 0; i < arr.length; i++) {
-        if (arr[i] === 0) continue;
-        for (let j = i + 1; j < arr.length; j++) {
-            if (arr[j] !== 0 && arr[i] > arr[j]) inversions++;
+    const isSolvable = (arr, size) => {
+        let inversions = 0;
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i] === 0) continue;
+            for (let j = i + 1; j < arr.length; j++) {
+                if (arr[j] !== 0 && arr[i] > arr[j]) inversions++;
+            }
         }
-    }
-    const emptyRow = Math.floor(arr.indexOf(0) / 4);
-    return (inversions + emptyRow) % 2 === 0;
-};
+        const emptyRow = Math.floor(arr.indexOf(0) / size);
+        const gridWidth = size;
+        return (inversions + emptyRow) % 2 === 0 || gridWidth % 2 === 1;
+    };
 
-/* const generateInitialPuzzle = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 13, 14, 15, 12];*/ //для швидкої перевірки виграшу
-
-export const useGame = () => {
     const [tiles, setTiles] = useState(generateInitialPuzzle);
     const [moves, setMoves] = useState(0);
     const [isWon, setIsWon] = useState(false);
@@ -35,28 +42,32 @@ export const useGame = () => {
         setMoves(0);
         setIsWon(false);
         setResetTrigger((prev) => prev + 1);
-    }, []);
+    }, [gridSize]);
+
+    useEffect(() => {
+        resetGame();
+    }, [gridSize, resetGame]);
 
     const moveTile = useCallback((index) => {
         const emptyIndex = tiles.indexOf(0);
-        if (!isAdjacent(index, emptyIndex)) return;
+        if (!isAdjacent(index, emptyIndex, gridSize)) return;
 
         const newTiles = [...tiles];
         [newTiles[emptyIndex], newTiles[index]] = [newTiles[index], newTiles[emptyIndex]];
         setTiles(newTiles);
         setMoves((m) => m + 1);
         checkWin(newTiles);
-    }, [tiles]);
+        // setIsWon(true); // перевірка вікна виграшу, застосовується після 1 кроку
+    }, [tiles, gridSize]);
 
-    const isAdjacent = (i, j) => {
-        const rowI = Math.floor(i / 4), colI = i % 4;
-        const rowJ = Math.floor(j / 4), colJ = j % 4;
+    const isAdjacent = (i, j, size) => {
+        const rowI = Math.floor(i / size), colI = i % size;
+        const rowJ = Math.floor(j / size), colJ = j % size;
         return Math.abs(rowI - rowJ) + Math.abs(colI - colJ) === 1;
     };
 
     const checkWin = (currentTiles) => {
-        const win = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0];
-        setIsWon(currentTiles.every((t, i) => t === win[i]));
+        setIsWon(currentTiles.every((t, i) => t === winState[i]));
     };
 
     return {
@@ -66,5 +77,6 @@ export const useGame = () => {
         resetGame,
         moveTile,
         resetTrigger,
+        gridSize,
     };
 };
