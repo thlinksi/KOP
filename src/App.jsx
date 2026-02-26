@@ -3,6 +3,7 @@ import Header from './components/Header';
 import StartPage from './pages/StartPage';
 import GamePage from './pages/GamePage';
 import ResultsPage from './pages/ResultsPage';
+import CookiePopup from './components/CookiePopup';
 import './index.css';
 
 function App() {
@@ -71,6 +72,10 @@ function App() {
                     onClearResults={clearResults}
                 />
             )}
+
+            { }
+            <CookiePopup />
+
         </div>
     );
 }

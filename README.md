@@ -1,16 +1,34 @@
-# React + Vite
+# Гра "П'ятнашки" (15 Puzzle)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Конфігурація та технології
 
-Currently, two official plugins are available:
+Проєкт побудований з використанням наступних технологій та інструментів:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+* **Основа:** React 19 + Vite
+* **Стилізація:** CSS (`index.css`)
+* **Робота з формами:** `react-hook-form` + валідація через `yup`
+* **Локальне збереження:** Local Storage API (для результатів, налаштувань та GDPR-згоди)
+* **Документація та UI-тестування:** JSDoc та Storybook
 
-## React Compiler
+## Базові команди
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Для локального розгортання та роботи з проєктом використовуйте наступні команди у терміналі:
 
-## Expanding the ESLint configuration
+| Опис дії | Команда |
+| :--- | :--- |
+| **Встановлення всіх залежностей** | `npm install` |
+| **Запуск локального сервера (Dev)** | `npm run dev` |
+| **Збірка готового проєкту (Build)** | `npm run build` |
+| **Перевірка коду (ESLint)** | `npm run lint` |
+| **Запуск UI-компонентів у Storybook** | `npm run storybook` |
+| **Генерація JSDoc документації** | `npm run docs` |
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Ліцензія
+
+Цей проєкт має відкритий вихідний код і розповсюджується на умовах [MIT License](LICENSE). 
+*Детальний звіт щодо ліцензій усіх використаних npm-залежностей (згенерований за допомогою `license-checker`) знаходиться у файлі `licenses.txt` у корені проєкту.*
+
+## Авторство
+
+Проєкт розроблено в рамках лабораторної роботи. 
+Авторка: студентка спеціальності "Інженерія програмного забезпечення" Бубон Ліна.
